@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 60px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.dialogDemo label {
+	line-height: 2.1em;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading.gif" />
+		</p:dialog>
+
+		<h:form>
+			<p:growl id="growl" globalOnly="false" />
+			<p:panel id="panel">
+				<f:facet name="header">
+					<div align="center">
+						<h1>Carrinho</h1>
+					</div>
+				</f:facet>
+				<center>
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12">
+							<div class="card card-w-title">
+								<h:messages style="color:red" />
+
+								<p:dataTable value="#{carrinhoController.entity.listaItem}"
+									var="entity">
+									<p:column>
+										<f:facet name="header">Nome</f:facet>
+										<h:outputLabel value="#{entity.produto.nome}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Valor</f:facet>
+										<h:outputLabel value="#{entity.valor}">
+											<f:convertNumber locale="pt_BR" currencySymbol="R$"
+												type="currency" />
+										</h:outputLabel>
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Ação</f:facet>
+										<p:commandButton value="remover"
+											action="#{carrinhoController.remover(entity.produto.id)}">
+											<f:ajax render="@form" execute="@tihs" />
+										</p:commandButton>
+									</p:column>
+
+								</p:dataTable>
+							</div>
+
+								<div align="center">
+									<p:commandButton  value="finalizar carrinho" icon="pi pi-check"
+										process="@form" update="@form"
+										action="#{carrinhoController.pedido(carrinhoController.entity.listaItem)}" />
+								</div>
+						</div>
+
+					</div>
+				</center>
+			</p:panel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

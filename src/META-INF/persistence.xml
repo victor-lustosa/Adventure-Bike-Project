@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="ProjectAdventureBike">
+		<class>converter.jpa.ConverterBandeira</class>
+		<class>converter.jpa.ConverterTipoCartao</class>
+		<class>model.Bicicleta</class>
+		<class>model.Boleto</class>
+		<class>model.Carrinho</class>
+		<class>model.CartaoCredito</class>
+		<class>model.Cidade</class>
+		<class>model.DefaultEntity</class>
+		<class>model.Endereco</class>
+		<class>model.Estado</class>
+		<class>model.Estoque</class>
+		<class>model.FormaPagamento</class>
+		<class>model.Fornecedor</class>
+		<class>model.ItemPedido</class>
+		<class>model.Marca</class>
+		<class>model.NotaFiscal</class>
+		<class>model.Pedido</class>
+		<class>model.Produto</class>
+		<class>model.ServicoPrestado</class>
+		<class>model.Telefone</class>
+		<class>model.TipoProduto</class>
+		<class>model.TipoRevisao</class>
+		<class>model.Usuario</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver"
+				value="org.postgresql.Driver" /> <!-- DB Driver -->
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:postgresql://localhost:5432/bikeproject" /> <!-- BD Mane -->
+			<property name="javax.persistence.jdbc.user"
+				value="bikeuser" /> <!-- DB User -->
+			<property name="javax.persistence.jdbc.password"
+				value="123456" /> <!-- DB Password -->
+
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.PostgreSQLDialect" /> <!-- DB Dialect -->
+			<property name="hibernate.hbm2ddl.auto" value="update" /> <!-- create / create-drop / update -->
+
+			<property name="hibernate.show_sql" value="true" /> <!-- Show SQL in console -->
+			<property name="hibernate.format_sql" value="true" /> <!-- Show SQL formatted -->
+		</properties>
+
+	</persistence-unit>
+
+	<!-- <persistence-unit name="Academico"> <class>model.Aluno</class> <class>model.Cidade</class> 
+		<class>model.DefaultEntity</class> <class>model.Estado</class> <class>model.Professor</class> 
+		<class>model.Telefone</class> <properties> <property name="javax.persistence.jdbc.url" 
+		value="jdbc:postgresql://localhost:5432/academico?useUnicode=true&amp;characterEncoding=UTF-8&amp;characterSetResults=UTF-8" 
+		/> <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" 
+		/> <property name="javax.persistence.jdbc.user" value="topicos2" /> <property 
+		name="javax.persistence.jdbc.password" value="123456" /> <property name="eclipselink.ddl-generation" 
+		value="drop-and-create-tables" /> <property name="eclipselink.ddl-generation" 
+		value="create-or-extend-tables" /> <property name="eclipselink.logging.level" 
+		value="ALL" /> </properties> </persistence-unit> -->
+
+</persistence>

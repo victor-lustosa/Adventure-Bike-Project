@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony">
+
+	<div class="layout-sidebar">
+		<ul id="layout-menu" class="layout-menu">
+			<li><h:link outcome="/login">
+					<i class="pi pi-user" />
+					<span>Login</span>
+				</h:link></li>
+			<li><h:link outcome="/pages/vendaproduto">
+					<i class="pi pi-list" />
+					<span>Todos os produtos</span>
+				</h:link></li>
+			<li><h:link outcome="/pages/pedido">
+					<i class="pi pi-home" />
+					<span>Pedidos</span>
+				</h:link></li>
+
+
+			<li><h:link outcome="/pages/carrinho">
+					<i class="pi pi-shopping-cart" />
+					<span>Carrinho</span>
+				</h:link></li>
+
+			<li><h:link outcome="/pages/pagamento">
+					<i class="pi pi-check" />
+					<span>Pagamento</span>
+				</h:link></li>
+
+
+
+
+
+
+
+		</ul>
+	</div>
+</ui:composition>

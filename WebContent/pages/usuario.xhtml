@@ -1,0 +1,209 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template2.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 60px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.dialogDemo label {
+	line-height: 2.1em;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading.gif" />
+		</p:dialog>
+
+
+		<h:form>
+			<p:growl id="growl" globalOnly="false" />
+			<p:panel id="panel">
+				<f:facet name="header">
+					<div align="center">
+						<h1>Cadastro de Usuario</h1>
+					</div>
+				</f:facet>
+				<p:tabView>
+					<p:tab title="Dados Pessoais">
+						<h:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel value="Nome: ">
+								<p:message for="itNome" escape="false" />
+							</p:outputLabel>
+							<p:inputText id="itNome" value="#{usuarioController.entity.nome}"
+								size="30" required="true" requiredMessage="Informe o nome." />
+
+							<p:outputLabel value="Cpf: ">
+								<p:message for="itCpf" escape="false" />
+							</p:outputLabel>
+
+
+							<p:inputMask id="itCpf" value="#{usuarioController.entity.cpf}"
+								mask="999.999.999-99"
+								styleClass="form-control pr-3 d-flex justify-content-start"
+								size="30" required="true" requiredMessage="Informe o cpf." />
+
+							<p:outputLabel value="E-mail:">
+								<p:message for="itEmail" escape="false" />
+							</p:outputLabel>
+							<p:inputText id="itEmail"
+								value="#{usuarioController.entity.email}" size="30"
+								required="true" requiredMessage="Informe o email." />
+
+							<p:outputLabel value="Senha:">
+
+							</p:outputLabel>
+							<p:password value="#{usuarioController.entity.senha}"
+								feedback="true" size="30" />
+
+
+							<p:outputLabel value="Data de Aniversário:">
+								<p:message for="itData" escape="false" />
+							</p:outputLabel>
+							<p:calendar id="itData" required="true"
+								requiredMessage="Informe a data de nascimento." size="30"
+								value="#{usuarioController.entity.dataAniversario}"
+								pattern="dd/MM/yyyy" />
+
+							<p:outputLabel value="Tipo de Usuário:">
+								<p:message for="itTipo" escape="false" />
+							</p:outputLabel>
+							<p:selectOneMenu id="itTipo"
+								value="#{usuarioController.entity.perfil}">
+								<f:selectItem itemLabel="Selecione ..." itemValue="" />
+								<f:selectItems required="true"
+									requiredMessage="Informe a senha."
+									value="#{usuarioController.listaPerfil}" var="tipo"
+									itemLabel="#{tipo.label}" itemValue="#{tipo}" />
+							</p:selectOneMenu>
+
+						</h:panelGrid>
+					</p:tab>
+					<p:tab title="Endereco e Telefone">
+						<h:panelGrid columns="2" cellpadding="5">
+							<p:outputLabel value="Cep:">
+								<p:message for="itCep" escape="false" />
+							</p:outputLabel>
+							<p:inputMask id="itCep"
+								value="#{usuarioController.entity.endereco.cep}"
+								mask="99999-999"
+								styleClass="form-control pr-3 d-flex justify-content-start"
+								size="30" required="true" requiredMessage="Informe o cep." />
+
+
+
+							<p:outputLabel value="Rua :">
+								<p:message for="itRua" escape="false" />
+							</p:outputLabel>
+
+							<p:inputText id="itRua"
+								value="#{usuarioController.entity.endereco.rua}" size="30"
+								required="true" requiredMessage="Informe a rua." />
+
+							<p:outputLabel value="Numero :">
+								<p:message for="itNumero" escape="false" />
+
+							</p:outputLabel>
+							<p:inputText id="itNumero"
+								value="#{usuarioController.entity.endereco.numero}" size="30"
+								required="true" requiredMessage="Informe o numero." />
+
+
+							<p:outputLabel value="Ponto de referencia :" />
+							<p:inputText size="30"
+								value="#{usuarioController.entity.endereco.pontoReferencia}" />
+
+							<p:outputLabel value="Complemento :" />
+							<p:inputText size="30"
+								value="#{usuarioController.entity.endereco.complemento}" />
+							<p:outputLabel value="Telefone (Número):">
+								<p:message for="itTel" escape="false" />
+							</p:outputLabel>
+							<p:inputMask id="itTel"
+								value="#{usuarioController.entity.telefone.numero}"
+								mask="(99) 99999-9999"
+								styleClass="form-control pr-3 d-flex justify-content-start"
+								size="30" required="true" requiredMessage="Informe o telefone." />
+
+
+						</h:panelGrid>
+					</p:tab>
+
+				</p:tabView>
+				<h:panelGrid columns="2">
+
+
+					<div class="ui-inputgroup">
+						<p:commandButton value="Listagem de Usuarios"
+							actionListener="#{usuarioController.abrirUsuarioListing}"
+							process="@this" update="@none" icon="pi pi-list">
+
+							<p:ajax event="dialogReturn"
+								listener="#{usuarioController.obterUsuarioListing}"
+								update="@form" />
+						</p:commandButton>
+
+					</div>
+				</h:panelGrid>
+				<p:toolbar>
+					<f:facet name="left">
+						<p:commandButton value="Salvar" icon="pi pi-check" process="@form"
+							update="@form" action="#{usuarioController.salvar}" />
+
+						<p:commandButton value="Limpar" process="@this" update="panel"
+							action="#{cusuarioController.limpar}">
+							<p:ajax update="@form" resetValues="true" />
+						</p:commandButton>
+
+					</f:facet>
+					<f:facet name="right">
+
+						<p:commandButton value="Excluir" icon="pi pi-trash"
+							process="@form" update="panel"
+							action="#{usuarioController.excluir}">
+							<p:confirm header="Confirmação" message="Confirma a exclusão?" />
+						</p:commandButton>
+					</f:facet>
+
+
+				</p:toolbar>
+			</p:panel>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
+
+
+
+
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 60px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.dialogDemo label {
+	line-height: 2.1em;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading.gif" />
+		</p:dialog>
+
+		<h:form>
+			<p:growl id="growl" globalOnly="false" />
+			<div align="center">
+				<p:panel id="panel" style="width:500px">
+					<f:facet name="header">
+						<div align="center">
+							<h1>Pagamento</h1>
+						</div>
+					</f:facet>
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12">
+
+							<p:tabView>
+								<p:tab title="Cartão de Credito">
+									<p:outputLabel value="nome do titular:" />
+									<p:inputText value="#{cartaoCreditoController.entity.nome}"
+										required="true" requiredMessage="Informe o nome do titular." />
+
+									<p:outputLabel value="digite o numero do cartao:" />
+									<p:inputText
+										value="#{cartaoCreditoController.entity.numeroCartao}"
+										required="true" requiredMessage="Informe o numero do cartao." />
+
+									<p:outputLabel value="codigoSeguranca:" />
+									<p:inputText
+										value="#{cartaoCreditoController.entity.codigoSeguranca}"
+										required="true"
+										requiredMessage="Informe o codigo de seguranca." />
+
+									<p:outputLabel value="data de vencimento:">
+										<p:message for="itData" escape="false" />
+									</p:outputLabel>
+									<p:calendar id="itData" required="true"
+										requiredMessage="Informe a data de vencimento." size="30"
+										value="#{cartaoCreditoController.entity.dataVencimento}"
+										pattern="dd/MM/yyyy" />
+									<p:outputLabel value="bandeira:" />
+									<p:selectOneMenu
+										value="#{cartaoCreditoController.entity.bandeira}">
+										<f:selectItem itemLabel="Selecione ..." itemValue="" />
+										<f:selectItems
+											value="#{cartaoCreditoController.listaBandeira}"
+											var="bandeira" itemLabel="#{bandeira.label}"
+											itemValue="#{bandeira}" />
+									</p:selectOneMenu>
+									<p:outputLabel value="Tipo de cartao: " />
+									<p:selectOneMenu
+										value="#{cartaoCreditoController.entity.tipoCartao}">
+										<f:selectItem itemLabel="Selecione ..." itemValue="" />
+										<f:selectItems
+											value="#{cartaoCreditoController.listaTipoCartao}"
+											var="tipo" itemLabel="#{tipo.label}" itemValue="#{tipo}" />
+									</p:selectOneMenu>
+								</p:tab>
+							</p:tabView>
+						</div>
+					</div>
+
+					<f:facet name="footer">
+						<div align="center">
+							<p:commandButton value="Entrar" icon="pi pi-check"
+								process="@form" update="@form"
+								action="#{cartaoCreditoController.salvar}" />
+
+						</div>
+					</f:facet>
+				</p:panel>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

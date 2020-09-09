@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="head">
+		<style type="text/css">
+.ui-panelgrid.form-elements .ui-grc-2 {
+	padding-left: 60px;
+}
+
+@media ( max-width :1024px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 20px;
+	}
+}
+
+@media ( max-width :640px) {
+	.ui-panelgrid.form-elements .ui-grc-2 {
+		padding-left: 6px;
+	}
+}
+
+.dialogDemo label {
+	line-height: 2.1em;
+}
+</style>
+	</ui:define>
+
+	<ui:define name="content">
+
+
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="PF('statusDialog').hide()" />
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			closable="false" resizable="false" showHeader="false">
+			<p:graphicImage name="/images/loading.gif" />
+		</p:dialog>
+
+		<h:form>
+			<div align="center">
+				<h:panelGrid id="panelForm" columns="3">
+
+					<p:outputLabel value="Nome do Produto: " />
+					<p:inputText value="#{vendaProdutoController.nome}" size="40" />
+
+					<p:commandButton value="Pesquisar"
+						actionListener="#{vendaProdutoController.pesquisar}">
+						<f:ajax execute="panelForm" render="@all" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</div>
+			<p:dataGrid var="produto" id="data"
+				value="#{vendaProdutoController.listaProduto}" columns="3"
+				layout="grid" rows="12" paginator="true" 
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="6,12,16">
+
+				<p:panel id="panel" header="#{produto.nome}" style="text-align:center">
+					<h:panelGrid columns="1" style="width:100%">
+						<img class="img-responsive"
+							style="max-width: 290px !important; max-height: 290px !important;"
+							src="img-produto?nome=#{produto.id}.png" />
+
+						<h:outputText value="#{produto.valor}" />
+
+						<p:commandButton value="descricao" icon="pi pi-bars"
+							action="#{vendaProdutoController.descricao(produto.id)}" />
+
+					</h:panelGrid>
+				</p:panel>
+			</p:dataGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
